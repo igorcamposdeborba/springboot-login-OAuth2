@@ -24,8 +24,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	
 	// Rotas (path da URL):
 	private static final String[] PUBLIC = {"/oauth/token", "/h2-console/**"}; // rotas públicas para página de login, para não precisar de login para mostrar a página de login
-	private static final String[] OPERATOR_OR_ADMIN = {"/employees/**", "/departments/**"}; // rotas públicas sem precisar de login, para catálogo
-	private static final String[] ADMIN = {"/employees/**"}; // rotas para admin logado
+	private static final String[] OPERATOR_GET = {"/employees/**", "/departments/**"}; // rotas públicas sem precisar de login, para catálogo
 	
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -40,10 +39,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		}
 		
 		http.authorizeRequests()
-				.antMatchers(PUBLIC).permitAll() // define autorizações
-				.antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll() // liberar para todos não logados (eles não têm token)
-				.antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN") // liberar quem possui essas roles
-				.antMatchers(ADMIN).hasRole("ADMIN") // liberar quem possui essas roles
-				.anyRequest().authenticated(); // se usuário acessar qualquer outra rota, ele tem que estar logado
+			.antMatchers(PUBLIC).permitAll() // define autorizações
+			.antMatchers(HttpMethod.GET, OPERATOR_GET).hasAnyRole("OPERATOR", "ADMIN") // liberar para quem tem role de Operator ou Admin
+			.antMatchers(OPERATOR_GET).hasAnyRole("ADMIN") // liberar quem possui essas roles
+			.anyRequest().hasAnyRole("ADMIN"); // se usuário acessar qualquer outra rota, ele tem que estar logado
 	}
 }

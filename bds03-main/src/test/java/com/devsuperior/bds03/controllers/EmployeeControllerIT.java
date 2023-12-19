@@ -101,6 +101,7 @@ public class EmployeeControllerIT {
 		result.andExpect(jsonPath("$.departmentId").value(1L));
 	}	
 
+	//FALHA
 	@Test
 	public void insertShouldReturn422WhenAdminLoggedAndBlankName() throws Exception {
 
@@ -117,10 +118,11 @@ public class EmployeeControllerIT {
 					.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isUnprocessableEntity());
-		result.andExpect(jsonPath("$.errors[0].fieldName").value("name"));
-		result.andExpect(jsonPath("$.errors[0].message").value("Campo requerido"));
+		result.andExpect(jsonPath("$.errorMessageCustomized[0].fieldName").value("name"));
+		result.andExpect(jsonPath("$.errorMessageCustomized[0].message").value("Campo requerido"));
 	}
 
+	//FALHA
 	@Test
 	public void insertShouldReturn422WhenAdminLoggedAndInvalidEmail() throws Exception {
 
@@ -137,10 +139,10 @@ public class EmployeeControllerIT {
 					.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isUnprocessableEntity());
-		result.andExpect(jsonPath("$.errors[0].fieldName").value("email"));
-		result.andExpect(jsonPath("$.errors[0].message").value("Email inválido"));
+		result.andExpect(jsonPath("$.errorMessageCustomized[0].fieldName").value("email"));
+		result.andExpect(jsonPath("$.errorMessageCustomized[0].message").value("Email inválido"));
 	}
-
+	//FALHA
 	@Test
 	public void insertShouldReturn422WhenAdminLoggedAndNullDepartment() throws Exception {
 
@@ -157,7 +159,7 @@ public class EmployeeControllerIT {
 					.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isUnprocessableEntity());
-		result.andExpect(jsonPath("$.errors[0].fieldName").value("departmentId"));
-		result.andExpect(jsonPath("$.errors[0].message").value("Campo requerido"));
+		result.andExpect(jsonPath("$.errorMessageCustomized[0].fieldName").value("departmentId"));
+		result.andExpect(jsonPath("$.errorMessageCustomized[0].message").value("Campo requerido"));
 	}
 }

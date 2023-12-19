@@ -18,14 +18,11 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long id;
-	@NotEmpty
 	public String name;	
-	@Email
 	public String email;
 	
 	@ManyToOne
 	@JoinColumn(name = "department_id")
-	@NotNull
 	public Department department;
 	
 	public Employee() {
@@ -69,4 +66,5 @@ public class Employee {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
+
 }
