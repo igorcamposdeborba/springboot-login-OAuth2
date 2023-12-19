@@ -1,0 +1,24 @@
+package com.devsuperior.bds03.dto;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+public class UserDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
+	@NotBlank(message = "Nome é obrigatório") // NotBlank valida espaços em branco e null
+	private String firstName;
+	private String lastName;
+	@Email (message = "Digite um e-mail válido")
+	private String email;
+	private String password;
+	
+	
+	public UserDTO() {}
+	
+	
+}

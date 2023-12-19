@@ -1,0 +1,5 @@
+package com.devsuperior.bds03.entities.login;
+
+public class Role {
+
+}
